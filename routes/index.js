@@ -30,7 +30,7 @@ router.get('/getData', function(req, res) {
     if (error) {
       baseJson.errorCode = 403
       baseJson.errorMessage = '403 Forbidden'
-      baseJson.data = []
+      baseJson.data = results
     } else {
       baseJson.errorCode = 200
       baseJson.errorMessage = 'OK'
