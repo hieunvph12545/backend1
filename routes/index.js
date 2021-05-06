@@ -28,6 +28,7 @@ router.get('/getData', function(req, res) {
   }
   connection.query('SELECT * FROM license_plates', function (error, results, fields) {
     if (error) {
+      console.log('err:'+error)
       baseJson.errorCode = +error
       baseJson.errorMessage = '403 Forbidden'
       baseJson.data = []
