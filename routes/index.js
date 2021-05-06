@@ -27,6 +27,7 @@ router.get('/getData', function(req, res) {
     data: undefined
   }
   connection.query('SELECT * FROM license_plates', function (error, results, fields) {
+    connection.release();
     if (error) {
       console.log('err:'+error)
       baseJson.errorCode = +error
