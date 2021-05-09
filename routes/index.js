@@ -4,7 +4,7 @@ const mysql      = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'password',
+  password : 'iku010420',
   database : 'search_license_plate'
 });
 connection.connect(function(err) {
@@ -27,7 +27,7 @@ router.get('/getData', function(req, res) {
     data: undefined
   }
   connection.query('SELECT * FROM license_plates', function (error, results, fields) {
-    connection.release();
+
     if (error) {
       console.log('err:'+error)
       baseJson.errorCode = +error
@@ -38,9 +38,21 @@ router.get('/getData', function(req, res) {
       baseJson.errorMessage = 'OK'
       baseJson.data = results
     }
-    res.send(baseJson);
+    res.send(baseJson)
   });
 
 });
-
+router.post('/search_license_plates',function (req,res) {
+  const seril=req.body.codes;
+  const codes=seril.slice(0,2)
+  console.log(abc);
+  connection.query('SELECT * FROM search_license_plate.license_plates_detail Where serial LIKE "'+seril+'" ', function (error, results, fields) {
+    if (error) throw error;
+    res.send(results)
+    connection.query('SELECT * FROM search_license_plate.license_plates Where serial LIKE "'+codes+'" ', function (error, results, fields) {
+      if (error) throw error;
+      res.send(results)
+    });
+  });
+})
 module.exports = router;
